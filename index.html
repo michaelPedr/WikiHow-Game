@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Jeu WikiHow</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; padding: 30px; }
+    #image { max-width: 400px; margin-bottom: 20px; }
+    button { display: block; margin: 10px auto; padding: 10px 20px; font-size: 16px; }
+    .correct { background-color: #4CAF50; color: white; }
+    .wrong { background-color: #f44336; color: white; }
+    #nav { margin-top: 30px; }
+  </style>
+</head>
+<body>
+  <h1>Quel est le bon titre pour cette image ?</h1>
+
+  <img id="image" src="https://via.placeholder.com/400x250.png?text=Image+1" alt="question image">
+
+  <div id="reponses"></div>
+
+  <div id="nav">
+    <button onclick="questionSuivante()">→ Question suivante</button>
+    <br><br>
+    <label>Aller à la question : </label>
+    <input type="number" id="sautInput" placeholder="ex : 3" min="1">
+    <button onclick="allerQuestion()">Go</button>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        image: "https://via.placeholder.com/400x250.png?text=Image+1",
+        reponses: [
+          { texte: "Comment parler aux pigeons", correct: false },
+          { texte: "Comment survivre à une attaque d'ours", correct: true },
+          { texte: "Comment danser avec un chapeau", correct: false },
+          { texte: "Comment devenir un arbre", correct: false }
+        ]
+      },
+      {
+        image: "https://via.placeholder.com/400x250.png?text=Image+2",
+        reponses: [
+          { texte: "Comment préparer un thé qui parle", correct: false },
+          { texte: "Comment s'excuser auprès d'un robot", correct: false },
+          { texte: "Comment cuisiner un repas pour 50 personnes", correct: true },
+          { texte: "Comment élever un moustique domestique", correct: false }
+        ]
+      }
+    ];
+
+    let index = 0;
+
+    function afficherQuestion(i) {
+      const q = questions[i];
+      document.getElementById("image").src = q.image;
+      const zoneReponses = document.getElementById("reponses");
+      zoneReponses.innerHTML = "";
+      q.reponses.forEach(r => {
+        const btn = document.createElement("button");
+        btn.textContent = r.texte;
+        btn.onclick = () => verifierReponse(btn, r.correct);
+        zoneReponses.appendChild(btn);
+      });
+    }
+
+    function verifierReponse(bouton, correct) {
+      const boutons = document.querySelectorAll("#reponses button");
+      boutons.forEach(btn => btn.disabled = true);
+      if (correct) {
+        bouton.classList.add("correct");
+      } else {
+        bouton.classList.add("wrong");
+        // Montrer la bonne réponse
+        boutons.forEach(btn => {
+          if (!btn.classList.contains("wrong") && questions[index].reponses.find(r => r.texte === btn.textContent && r.correct)) {
+            btn.classList.add("correct");
+          }
+        });
+      }
+    }
+
+    function questionSuivante() {
+      index = (index + 1) % questions.length;
+      afficherQuestion(index);
+    }
+
+    function allerQuestion() {
+      const val = parseInt(document.getElementById("sautInput").value);
+      if (!isNaN(val) && val >= 1 && val <= questions.length) {
+        index = val - 1;
+        afficherQuestion(index);
+      }
+    }
+
+    // Démarrage du jeu
+    afficherQuestion(index);
+  </script>
+</body>
+</html>
