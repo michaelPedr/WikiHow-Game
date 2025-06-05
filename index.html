@@ -153,15 +153,16 @@ function afficherQuestion(i) {
       }
     }
     
-    // Active la touche Entrée pour valider automatiquement
-    document.getElementById("sautInput").addEventListener("keydown", function(event) {
-      if (event.key === "Enter") {
-        allerQuestion();
-      }
-    });
-
     // Démarrage du jeu
-    afficherQuestion(index);
+    window.onload = function () {
+      afficherQuestion(index);
+    
+      document.getElementById("sautInput").addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+          allerQuestion();
+        }
+      });
+    };
   </script>
 </body>
 </html>
