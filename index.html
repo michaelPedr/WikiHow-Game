@@ -91,7 +91,7 @@ function afficherQuestion(i) {
 
   // Redimensionne proportionnellement si nécessaire
   img.onload = () => {
-    const maxHeight = 500;
+    const maxHeight = 350;
     if (img.naturalHeight > maxHeight) {
       const ratio = maxHeight / img.naturalHeight;
       img.style.height = `${maxHeight}px`;
