@@ -1,6 +1,6 @@
 const questions = [
   {
-    image: "https://via.placeholder.com/400x250.png?text=Image+1",
+    image: "images/image1.png",
     reponses: [
       { texte: "Comment parler aux pigeons", correct: false },
       { texte: "Comment survivre à une attaque d'ours", correct: true },
@@ -9,7 +9,7 @@ const questions = [
     ]
   },
   {
-    image: "https://via.placeholder.com/400x250.png?text=Image+2",
+    image: "images/image2.png",
     reponses: [
       { texte: "Comment préparer un thé qui parle", correct: false },
       { texte: "Comment s'excuser auprès d'un robot", correct: false },
