@@ -152,6 +152,11 @@ function afficherQuestion(i) {
         input.value = ""; // optionnel : efface la saisie après validation
       }
     }
+
+    function questionSuivante() {
+      index = (index + 1) % questions.length;
+      afficherQuestion(index);
+    }
     
     // Démarrage du jeu
     window.onload = function () {
