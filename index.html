@@ -82,18 +82,36 @@
   <script>
     let index = 0;
 
-    function afficherQuestion(i) {
-      const q = questions[i];
-      document.getElementById("image").src = q.image;
-      const zoneReponses = document.getElementById("reponses");
-      zoneReponses.innerHTML = "";
-      q.reponses.forEach(r => {
-        const btn = document.createElement("button");
-        btn.textContent = r.texte;
-        btn.onclick = () => verifierReponse(btn, r.correct);
-        zoneReponses.appendChild(btn);
-      });
+function afficherQuestion(i) {
+  const q = questions[i];
+
+  // Affiche l'image
+  const img = document.getElementById("image");
+  img.src = q.image;
+
+  // Redimensionne proportionnellement si nécessaire
+  img.onload = () => {
+    const maxHeight = 500;
+    if (img.naturalHeight > maxHeight) {
+      const ratio = maxHeight / img.naturalHeight;
+      img.style.height = `${maxHeight}px`;
+      img.style.width = `${img.naturalWidth * ratio}px`;
+    } else {
+      img.style.height = `${img.naturalHeight}px`;
+      img.style.width = `${img.naturalWidth}px`;
     }
+  };
+
+  // Affiche les réponses
+  const zoneReponses = document.getElementById("reponses");
+  zoneReponses.innerHTML = "";
+  q.reponses.forEach(r => {
+    const btn = document.createElement("button");
+    btn.textContent = r.texte;
+    btn.onclick = () => verifierReponse(btn, r.correct);
+    zoneReponses.appendChild(btn);
+  });
+}
 
     function verifierReponse(bouton, correct) {
       const boutons = document.querySelectorAll("#reponses button");
