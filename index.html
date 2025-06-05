@@ -22,8 +22,6 @@
         margin: 0 auto;
       }
 
-
-    
       #reponses {
         display: grid;
         grid-template-columns: repeat(2, 250px); /* 2 colonnes de 250px */
@@ -77,10 +75,10 @@
   <div id="reponses"></div>
 
   <div id="nav">
-    <button onclick="questionSuivante()">→ Question suivante</button>
+    <button id="nextBtn" onclick="questionSuivante()" disabled>→ Question suivante</button>
     <br><br>
     <label>Aller à la question : </label>
-    <input type="number" id="sautInput" placeholder="ex : 3" min="1">
+    <input type="number" id="sautInput" placeholder="Question actuelle : 1" min="1">
     <button onclick="allerQuestion()">Go</button>
   </div>
 
@@ -108,13 +106,22 @@ function afficherQuestion(i) {
     }
   };
 
+  // Met à jour le placeholder de la zone de saisie
+  document.getElementById("sautInput").placeholder = "Question actuelle : " + (i + 1);
+
+  // Désactive le bouton “question suivante” tant qu’aucune réponse n’est cliquée
+  document.getElementById("nextBtn").disabled = true;
+
   // Affiche les réponses
   const zoneReponses = document.getElementById("reponses");
   zoneReponses.innerHTML = "";
   q.reponses.forEach(r => {
     const btn = document.createElement("button");
     btn.textContent = r.texte;
-    btn.onclick = () => verifierReponse(btn, r.correct);
+    btn.onclick = () => {
+      verifierReponse(btn, r.correct);
+      document.getElementById("nextBtn").disabled = false; // on active le bouton après clic
+    };
     zoneReponses.appendChild(btn);
   });
 }
