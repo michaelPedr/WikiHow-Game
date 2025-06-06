@@ -86,6 +86,13 @@
   <script>
     let index = 0;
 
+function melanger(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+
 function afficherQuestion(i) {
   const q = questions[i];
 
@@ -115,12 +122,14 @@ function afficherQuestion(i) {
   // Affiche les réponses
   const zoneReponses = document.getElementById("reponses");
   zoneReponses.innerHTML = "";
-  q.reponses.forEach(r => {
+  const reponsesMelangees = [...q.reponses];
+  melanger(reponsesMelangees);
+  reponsesMelangees.forEach(r => {
     const btn = document.createElement("button");
     btn.textContent = r.texte;
     btn.onclick = () => {
       verifierReponse(btn, r.correct);
-      document.getElementById("nextBtn").disabled = false; // on active le bouton après clic
+      document.getElementById("nextBtn").disabled = false;
     };
     zoneReponses.appendChild(btn);
   });
